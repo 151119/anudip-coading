@@ -1,0 +1,108 @@
+/////DATABASE CREATION
+mysql> create database HOSPITAL;
+Query OK, 1 row affected (0.05 sec)
+mysql> use HOSPITAL;
+Database changed
+
+/////DOCTORS TABLE
+ CREATE TABLE Doctor (
+    ->     doctor_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     first_name VARCHAR(100),
+    ->     last_name VARCHAR(100),
+    ->     specialization VARCHAR(100),
+    ->     phone_number VARCHAR(15),
+    ->     email VARCHAR(100),
+    ->     address TEXT
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+mysql> desc Doctor;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| doctor_id      | int          | NO   | PRI | NULL    | auto_increment |
+| first_name     | varchar(100) | YES  |     | NULL    |                |
+| last_name      | varchar(100) | YES  |     | NULL    |                |
+| specialization | varchar(100) | YES  |     | NULL    |                |
+| phone_number   | varchar(15)  | YES  |     | NULL    |                |
+| email          | varchar(100) | YES  |     | NULL    |                |
+| address        | text         | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.04 sec)
+
+
+////PATIENTS TABLE
+mysql> CREATE TABLE Patient (
+    ->     patient_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     first_name VARCHAR(100),
+    ->     last_name VARCHAR(100),
+    ->     dob DATE,  -- Date of birth
+    ->     gender VARCHAR(10),
+    ->     phone_number VARCHAR(15),
+    ->     email VARCHAR(100),
+    ->     address TEXT,
+    ->     emergency_contact_name VARCHAR(100),
+    ->     emergency_contact_phone VARCHAR(15)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+mysql> desc Patient;
++-------------------------+--------------+------+-----+---------+----------------+
+| Field                   | Type         | Null | Key | Default | Extra          |
++-------------------------+--------------+------+-----+---------+----------------+
+| patient_id              | int          | NO   | PRI | NULL    | auto_increment |
+| first_name              | varchar(100) | YES  |     | NULL    |                |
+| last_name               | varchar(100) | YES  |     | NULL    |                |
+| dob                     | date         | YES  |     | NULL    |                |
+| gender                  | varchar(10)  | YES  |     | NULL    |                |
+| phone_number            | varchar(15)  | YES  |     | NULL    |                |
+| email                   | varchar(100) | YES  |     | NULL    |                |
+| address                 | text         | YES  |     | NULL    |                |
+| emergency_contact_name  | varchar(100) | YES  |     | NULL    |                |
+| emergency_contact_phone | varchar(15)  | YES  |     | NULL    |                |
++-------------------------+--------------+------+-----+---------+----------------+
+
+/////APPOINTMENT TABLE
+mysql> CREATE TABLE Appointment (
+    ->     appointment_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     patient_id INT,
+    ->     doctor_id INT,
+    ->     appointment_date DATE,
+    ->     appointment_time TIME,
+    ->     status VARCHAR(20),  -- e.g., scheduled, completed, canceled
+    ->     FOREIGN KEY (patient_id) REFERENCES Patient(patient_id),
+    ->     FOREIGN KEY (doctor_id) REFERENCES Doctor(doctor_id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+mysql> DESC Appointment;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| appointment_id   | int         | NO   | PRI | NULL    | auto_increment |
+| patient_id       | int         | YES  | MUL | NULL    |                |
+| doctor_id        | int         | YES  | MUL | NULL    |                |
+| appointment_date | date        | YES  |     | NULL    |                |
+| appointment_time | time        | YES  |     | NULL    |                |
+| status           | varchar(20) | YES  |     | NULL    |                |
++------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+/////BILL TABLE
+mysql> CREATE TABLE Bill (
+    ->     bill_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     patient_id INT,
+    ->     total_amount DECIMAL(10, 2),
+    ->     payment_status VARCHAR(20),  -- e.g., paid, pending
+    ->     bill_date DATE,
+    ->     FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC Bill;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| bill_id        | int           | NO   | PRI | NULL    | auto_increment |
+| patient_id     | int           | YES  | MUL | NULL    |                |
+| total_amount   | decimal(10,2) | YES  |     | NULL    |                |
+| payment_status | varchar(20)   | YES  |     | NULL    |                |
+| bill_date      | date          | YES  |     | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
