@@ -35,7 +35,7 @@ mysql> CREATE TABLE Patient (
     ->     patient_id INT PRIMARY KEY AUTO_INCREMENT,
     ->     first_name VARCHAR(100),
     ->     last_name VARCHAR(100),
-    ->     dob DATE,  -- Date of birth
+    ->     dob DATE,  
     ->     gender VARCHAR(10),
     ->     phone_number VARCHAR(15),
     ->     email VARCHAR(100),
@@ -67,7 +67,7 @@ mysql> CREATE TABLE Appointment (
     ->     doctor_id INT,
     ->     appointment_date DATE,
     ->     appointment_time TIME,
-    ->     status VARCHAR(20),  -- e.g., scheduled, completed, canceled
+    ->     status VARCHAR(20),  
     ->     FOREIGN KEY (patient_id) REFERENCES Patient(patient_id),
     ->     FOREIGN KEY (doctor_id) REFERENCES Doctor(doctor_id)
     -> );
@@ -89,7 +89,7 @@ mysql> CREATE TABLE Bill (
     ->     bill_id INT PRIMARY KEY AUTO_INCREMENT,
     ->     patient_id INT,
     ->     total_amount DECIMAL(10, 2),
-    ->     payment_status VARCHAR(20),  -- e.g., paid, pending
+    ->     payment_status VARCHAR(20),  
     ->     bill_date DATE,
     ->     FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
     -> );
